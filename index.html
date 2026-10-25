@@ -58,6 +58,64 @@ footer{text-align:center;font:10px Arial,sans-serif;letter-spacing:.2em;color:#b
 
 @media(max-height:650px){.hero{min-height:650px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important}}
+
+/* Mobile polish: keep the invitation elegant and the video from dominating */
+@media (max-width: 600px) {
+  html, body { width: 100%; overflow-x: hidden; }
+  .content {
+    width: 100%;
+    max-width: 100%;
+    margin: 10px auto 22px;
+    padding: 0 10px;
+  }
+  .card {
+    padding: 22px 14px;
+    margin-bottom: 12px;
+    box-shadow: 0 8px 24px #0005;
+  }
+  .card:before { inset: 5px; }
+  h2 {
+    font-size: clamp(25px, 7vw, 32px);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .rule { margin: 14px auto 18px; }
+  .video-stage {
+    padding: 4px 0 12px;
+  }
+  .video-frame {
+    width: min(100%, 320px);
+    border: 1px solid #c5a36a;
+    box-shadow: 0 8px 22px #32131d25;
+    background: #090909;
+  }
+  .note {
+    max-width: 300px;
+    margin: 12px auto 0;
+    padding: 0 4px;
+    font-size: 11px;
+    line-height: 1.6;
+  }
+  .invite-copy { font-size: 14px; line-height: 1.75; }
+  .events { gap: 10px; }
+  .event {
+    grid-template-columns: 60px minmax(0, 1fr);
+    gap: 10px;
+    padding: 11px;
+  }
+  .day { padding: 9px 3px; }
+  .day strong { font-size: 24px; }
+  .event h3 { font-size: 16px; }
+  .event p { font-size: 12px; overflow-wrap: anywhere; }
+  .map-link { max-width: 100%; line-height: 1.5; }
+}
+@media (max-width: 360px) {
+  .content { padding: 0 7px; }
+  .card { padding: 19px 11px; }
+  .video-frame { width: min(100%, 290px); }
+  .event { grid-template-columns: 54px minmax(0, 1fr); gap: 8px; padding: 9px; }
+}
+
 </style>
 </head>
 <body>
