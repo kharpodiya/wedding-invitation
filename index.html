@@ -28,18 +28,16 @@
 h2{text-align:center;font-weight:400;font-size:clamp(29px,5vw,42px);font-style:italic;color:#67162d;margin:0 0 8px;position:relative}
 .rule{width:105px;height:1px;background:#b58c4b;margin:17px auto 24px;position:relative}.rule:after{content:"♥";position:absolute;top:-9px;left:50%;transform:translateX(-50%);padding:0 8px;background:#f6e8ce;color:#761a32;font-size:13px}
 .invite-copy{text-align:center;line-height:1.9;max-width:700px;margin:auto;position:relative}
-.phone-stage{display:flex;justify-content:center;align-items:center;padding:12px 0 20px;position:relative;z-index:1}
-.phone{position:relative;width:min(76vw,300px);padding:5px;border-radius:48px;background:linear-gradient(135deg,#f3d79b 0%,#8f6a3c 8%,#28242a 17%,#08090c 50%,#8d6337 91%,#f4d89a 100%);box-shadow:0 24px 48px #170610aa,0 0 0 1px #f7dfa355,inset 0 0 0 1px #f6dda0;isolation:isolate}
-.phone:before{content:"";position:absolute;inset:2px;border-radius:45px;border:1px solid #f5dca177;pointer-events:none;z-index:5}
-.phone-bezel{position:relative;padding:5px;border-radius:43px;background:linear-gradient(145deg,#29272b,#050507 55%,#292328);overflow:hidden}
-.phone-notch{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:78px;height:21px;background:#020204;border-radius:999px;z-index:4;display:flex;justify-content:flex-end;align-items:center;padding-right:10px;box-shadow:0 1px 1px #ffffff18}
-.phone-notch span{width:5px;height:5px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#31516c,#0a1727 70%);box-shadow:0 0 0 1px #101218}
-.phone-screen{position:relative;overflow:hidden;border-radius:38px;background:#030509;border:1px solid #625a54;aspect-ratio:9/19.5;display:flex;align-items:center}
-.phone-screen video{display:block;width:100%;height:100%;max-height:72vh;object-fit:contain;background:#030509}
-.phone-homebar{display:none}
-.phone-side{position:absolute;z-index:6;border-radius:4px;background:linear-gradient(90deg,#71542e,#e6c783,#5b4327);box-shadow:0 0 0 1px #0b0b0d}
-.side-left{left:-3px;top:100px;height:34px;width:3px}
-.side-right{right:-3px;top:122px;height:56px;width:3px}
+
+.video-stage{display:flex;justify-content:center;align-items:center;padding:12px 0 20px;position:relative;z-index:1}
+.video-frame{position:relative;width:min(100%,420px);aspect-ratio:9/16;margin:0 auto;overflow:hidden;background:#030509}
+.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:#030509}
+.video-control-btn:focus-visible{outline:2px solid #fff0c8;outline-offset:2px}
+@media(max-width:480px){}
+@media(min-width:700px){.video-frame{width:min(100%,440px)}}
+@media(max-width:480px){.video-frame{width:100%}}
+.map-link{display:inline-block;margin-top:7px;padding:7px 11px;border:1px solid #b58c4b;border-radius:3px;color:#68172e;text-decoration:none;font:600 12px Arial,sans-serif;letter-spacing:.02em;transition:background .2s,color .2s}
+.map-link:hover,.map-link:focus-visible{background:#68172e;color:#fff0c8;outline:none}
 @media(min-width:700px){.phone{width:292px}.phone-screen video{max-height:640px}}
 @media(max-width:380px){.phone{width:min(79vw,278px);border-radius:41px;padding:4px}.phone-bezel{border-radius:37px;padding:5px}.phone-screen{border-radius:33px}.phone-notch{height:19px;width:72px}}
 .note{text-align:center;font:12px/1.7 Arial,sans-serif;color:#75564b;position:relative;margin:12px 0 0}
@@ -47,9 +45,6 @@ h2{text-align:center;font-weight:400;font-size:clamp(29px,5vw,42px);font-style:i
 .event{display:grid;grid-template-columns:72px 1fr;gap:14px;padding:14px;background:#fffaf0b0;border:1px solid #dfc99e}
 .day{background:#6b152d;color:#ffe7b0;text-align:center;padding:10px 4px;height:max-content}.day strong{display:block;font-size:27px;font-weight:400}.day span{font:10px Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase}
 .event h3{font-size:18px;font-weight:400;color:#68172e;margin:1px 0 7px}.event p{font:13px/1.75 Arial,sans-serif;color:#654a42;margin:0}
-.map-link{display:inline-block;margin-top:7px;padding:7px 11px;border:1px solid #b58c4b;border-radius:3px;color:#68172e;text-decoration:none;font:600 12px Arial,sans-serif;letter-spacing:.02em;transition:background .2s,color .2s}
-.map-link:hover,.map-link:focus-visible{background:#68172e;color:#fff0c8;outline:none}
-
 .closing{text-align:center;padding:28px 16px 42px}.closing .eyebrow{font:11px Arial,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#e7c782}.closing h2{color:#ffe0a0;margin:14px 0}.closing p{line-height:1.8;color:#f2dec3}.signature{font-size:36px;font-style:italic;color:#f7dda1;margin-top:20px}
 .toast{display:none;position:relative;margin:14px auto 0;padding:12px;background:#fff0d0;color:#5b1a2c;font:13px Arial,sans-serif;text-align:center;max-width:720px}.toast.show{display:block}
 footer{text-align:center;font:10px Arial,sans-serif;letter-spacing:.2em;color:#bca789;padding:5px 0 24px}
@@ -65,6 +60,7 @@ footer{text-align:center;font:10px Arial,sans-serif;letter-spacing:.2em;color:#b
 
 @media(max-height:650px){.hero{min-height:650px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important}}
+.video-frame{position:relative;width:100%;aspect-ratio:9/16;max-height:78vh;overflow:hidden;border-radius:14px;background:#030509}.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}@media(min-width:700px){.video-frame{max-width:420px;margin-inline:auto}}
 </style>
 </head>
 <body>
@@ -82,56 +78,45 @@ footer{text-align:center;font:10px Arial,sans-serif;letter-spacing:.2em;color:#b
   </section>
   <section class="card">
     <h2>Our Wedding Invitation</h2><div class="rule"></div>
-    <div class="phone-stage">
-      <div class="phone iphone-18-pro" aria-label="iPhone 18 Pro-style phone frame">
-        <div class="phone-side side-left"></div><div class="phone-side side-right"></div>
-        <div class="phone-bezel">
-          <div class="phone-notch"><span></span></div>
-          <div class="phone-screen">
-            <video id="video" controls playsinline preload="metadata" poster="">
-              <source src="1792905221429158.mp4" type="video/mp4">
-              Your browser does not support video.
-            </video>
-          </div>
-          <div class="phone-homebar"></div>
-        </div>
+    <div class="video-stage">
+      <div class="video-frame drive-frame" id="videoFrame">
+        <iframe
+          src="https://drive.google.com/file/d/1xv43VilTGVz_EQc8FscFrgwfjyCV26M_/preview"
+          title="Deepak and Shilpi wedding invitation video"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </div>
     <p class="note">Wedding invitation film · Turn the sound on for the full experience.</p>
-    <div class="toast" id="missing">To show your invitation video here, upload it in the same folder as <b>wedding.mp4</b>.</div>
+    <div class="toast" id="missing">If the video does not load, make sure the Google Drive video sharing setting is “Anyone with the link”.</div>
   </section>
   <section class="card">
     <h2>Wedding Functions</h2><div class="rule"></div>
     <div class="events">
-      <article class="event">
-        <div class="day"><strong>19</strong><span>Nov 2026</span></div>
+      <article class="event"><div class="day"><strong>14</strong><span>Nov 2026</span></div>
         <div>
-          <h3>Haldi, Bhat, Party &amp; Mehendi</h3>
-          <p>
-            <b>Haldi</b> · 08:00 AM<br>
-            <b>Bhat</b> · 05:00–06:00 PM<br>
-            <b>Party</b> · 08:00 PM<br>
-            <b>Mehendi</b> · 09:00 PM<br><br>
-            <b>Venue</b><br>
-            Laxmi Narayan Mandir, Raghubir Nagar, New Delhi<br>
-            <a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Laxmi+Narayan+Mandir%2C+Raghubir+Nagar%2C+New+Delhi" target="_blank" rel="noopener noreferrer">View venue on Google Maps ↗</a>
-          </p>
+          <h3>Lagan & Teeka</h3>
+          <b>Precious Moments Banquet</b>
+          <br>Najafgarh Rd, near Metro Pillar No. 571, Block B1, Janakpuri, New Delhi, 110058</b> 10:00am – 4:00 pm<br>
+          <a class="map-link" href="https://maps.app.goo.gl/AreuMFejJ9dZ5z7z6" target="_blank" rel="noopener noreferrer">View venue on Google Maps ↗</a>
         </div>
       </article>
-      <article class="event">
-        <div class="day"><strong>20</strong><span>Nov 2026</span></div>
+      <article class="event"><div class="day">
+        <strong>20</strong><span>Nov 2026</span></div>
         <div>
           <h3>The Wedding</h3>
           <p>
-            <b>Ghud Chadhi</b> · 09:00–10:00 AM<br>
-            <b>Baraat arrival</b> · 08:00 PM<br><br>
-            <b>Wedding venue</b><br>
-            Sumangalam Hotel &amp; Banquet, SH 77, Joya, Amroha, Uttar Pradesh – 244245<br>
-            <a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Sumangalam+Hotel+%26+Banquet%2C+SH+77%2C+Joya%2C+Amroha%2C+Uttar+Pradesh+244245" target="_blank" rel="noopener noreferrer">View venue on Google Maps ↗</a>
-          </p>
-        </div>
-      </article>
+            <b>Ghud Chadhi</b> · 10:00–11:00 AM<br>
+            <b>Baraat arrival</b> · 08:00 PM<br>
+            <b>Wedding venue</b>
+            <br>Sumangalam Hotel & Banquet, Roaf SH 77, Joya, Amroha, Uttar Pradesh - 244245<br>
+            <a class="map-link" href="https://maps.app.goo.gl/nPgLcRGWAyBxcGWEA" target="_blank" rel="noopener noreferrer">View venue on Google Maps ↗</a>
+          </div>
+        </article>
     </div>
+    <p class="note">Please confirm the banquet name and full address before sharing publicly.</p>
   </section>
   <section class="closing">
     <div class="eyebrow">With best wishes</div><div class="rule"></div>
@@ -146,19 +131,13 @@ footer{text-align:center;font:10px Arial,sans-serif;letter-spacing:.2em;color:#b
   function init(){
     var button=document.getElementById('open');
     var content=document.getElementById('content');
-    var video=document.getElementById('video');
-    var missing=document.getElementById('missing');
     if(!button||!content)return;
+
     button.addEventListener('click',function(){
       content.style.display='block';
       content.classList.add('show');
       setTimeout(function(){content.scrollIntoView({behavior:'smooth',block:'start'});},50);
-      if(video){
-        var attempt=video.play();
-        if(attempt&&attempt.catch)attempt.catch(function(){if(missing)missing.classList.add('show');});
-      }
     });
-    if(video)video.addEventListener('error',function(){if(missing)missing.classList.add('show');});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
