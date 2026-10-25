@@ -31,9 +31,16 @@ h2{text-align:center;font-weight:400;font-size:clamp(29px,5vw,42px);font-style:i
 
 .video-stage{display:flex;justify-content:center;align-items:center;padding:12px 0 20px;position:relative;z-index:1}
 .video-frame{position:relative;width:min(100%,420px);aspect-ratio:9/16;margin:0 auto;overflow:hidden;background:#030509}
-.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:#030509}
-.video-control-btn:focus-visible{outline:2px solid #fff0c8;outline-offset:2px}
-@media(max-width:480px){}
+.video-frame video{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:contain;background:#030509}
+.custom-video{touch-action:manipulation}
+.video-controls{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:10px;padding:34px 12px 12px;background:linear-gradient(transparent,#000b);opacity:1;transition:opacity .25s ease;z-index:3}
+.video-controls button{flex:0 0 auto;border:0;border-radius:50%;width:36px;height:36px;background:#0009;color:#fff;font:18px Arial,sans-serif;cursor:pointer;display:grid;place-items:center}
+.video-controls input[type=range]{min-width:0;flex:1;accent-color:#e8c575;cursor:pointer}
+.custom-video.controls-hidden .video-controls{opacity:0;pointer-events:none}
+.video-tap-hint{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#0008;color:#fff;padding:10px 14px;border-radius:24px;font:12px Arial,sans-serif;pointer-events:none;opacity:1;transition:opacity .25s}
+.custom-video.playing .video-tap-hint{opacity:0}
+.custom-video.controls-hidden{cursor:none}
+@media(prefers-reduced-motion:reduce){.video-controls,.video-tap-hint{transition:none}}
 @media(min-width:700px){.video-frame{width:min(100%,440px)}}
 @media(max-width:480px){.video-frame{width:100%}}
 .map-link{display:inline-block;margin-top:7px;padding:7px 11px;border:1px solid #b58c4b;border-radius:3px;color:#68172e;text-decoration:none;font:600 12px Arial,sans-serif;letter-spacing:.02em;transition:background .2s,color .2s}
@@ -60,7 +67,6 @@ footer{text-align:center;font:10px Arial,sans-serif;letter-spacing:.2em;color:#b
 
 @media(max-height:650px){.hero{min-height:650px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important}}
-.video-frame{position:relative;width:100%;aspect-ratio:9/16;max-height:78vh;overflow:hidden;border-radius:14px;background:#030509}.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}@media(min-width:700px){.video-frame{max-width:420px;margin-inline:auto}}
 </style>
 </head>
 <body>
@@ -79,18 +85,22 @@ footer{text-align:center;font:10px Arial,sans-serif;letter-spacing:.2em;color:#b
   <section class="card">
     <h2>Our Wedding Invitation</h2><div class="rule"></div>
     <div class="video-stage">
-      <div class="video-frame drive-frame" id="videoFrame">
-        <iframe
-          src="https://drive.google.com/file/d/1xv43VilTGVz_EQc8FscFrgwfjyCV26M_/preview"
-          title="Deepak and Shilpi wedding invitation video"
-          allow="autoplay; fullscreen; picture-in-picture"
-          allowfullscreen
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div class="video-frame custom-video" id="videoShell">
+        <video id="video" preload="metadata" playsinline webkit-playsinline muted poster="" aria-label="Deepak and Shilpi wedding invitation video">
+          <source src="https://pub-104b8206659a4fae8e6cbdc4917a3872.r2.dev/1792905221429158.mp4" type="video/mp4">
+          Your browser does not support HTML5 video.
+        </video>
+        <div class="video-controls" id="videoControls" aria-label="Video controls">
+          <button type="button" id="playPause" aria-label="Play video" title="Play/Pause">▶</button>
+          <input type="range" id="videoSeek" min="0" max="1000" value="0" aria-label="Seek video">
+          <button type="button" id="muteToggle" aria-label="Unmute video" title="Sound">🔇</button>
+          <button type="button" id="fullscreenToggle" aria-label="Fullscreen" title="Fullscreen">⛶</button>
+        </div>
+        <div class="video-tap-hint" id="videoTapHint">Tap to play · sound is muted</div>
       </div>
     </div>
     <p class="note">Wedding invitation film · Turn the sound on for the full experience.</p>
-    <div class="toast" id="missing">If the video does not load, make sure the Google Drive video sharing setting is “Anyone with the link”.</div>
+    <div class="toast" id="missing">To show your invitation video here, upload it in the same folder as <b>wedding.mp4</b>.</div>
   </section>
   <section class="card">
     <h2>Wedding Functions</h2><div class="rule"></div>
@@ -131,11 +141,66 @@ footer{text-align:center;font:10px Arial,sans-serif;letter-spacing:.2em;color:#b
   function init(){
     var button=document.getElementById('open');
     var content=document.getElementById('content');
+    var video=document.getElementById('video');
+    var shell=document.getElementById('videoShell');
+    var controls=document.getElementById('videoControls');
+    var playPause=document.getElementById('playPause');
+    var muteToggle=document.getElementById('muteToggle');
+    var fullscreenToggle=document.getElementById('fullscreenToggle');
+    var seek=document.getElementById('videoSeek');
     if(!button||!content)return;
 
+    var hideTimer=null;
+    function showControls(){
+      if(!shell)return;
+      shell.classList.remove('controls-hidden');
+      if(hideTimer)clearTimeout(hideTimer);
+      if(video && !video.paused){hideTimer=setTimeout(function(){shell.classList.add('controls-hidden');},2400);}
+    }
+    function syncPlay(){
+      if(!video||!shell)return;
+      shell.classList.toggle('playing',!video.paused);
+      if(playPause){playPause.textContent=video.paused?'▶':'Ⅱ';playPause.setAttribute('aria-label',video.paused?'Play video':'Pause video');}
+      if(video.paused)showControls();
+    }
+    function togglePlay(){
+      if(!video)return;
+      if(video.paused){var p=video.play();if(p&&p.catch)p.catch(function(){showControls();});}
+      else video.pause();
+      showControls();
+    }
+    if(playPause)playPause.addEventListener('click',function(e){e.stopPropagation();togglePlay();});
+    if(video){
+      video.addEventListener('play',syncPlay);video.addEventListener('pause',syncPlay);video.addEventListener('ended',syncPlay);
+      video.addEventListener('timeupdate',function(){if(seek&&video.duration)seek.value=String(Math.round(video.currentTime/video.duration*1000));});
+      video.addEventListener('click',function(){togglePlay();showControls();});
+      video.addEventListener('error',function(){var m=document.getElementById('missing');if(m){m.textContent='Video could not load. Check that the R2 public URL is enabled and the MP4 filename is correct.';m.classList.add('show');}});
+    }
+    if(seek)seek.addEventListener('input',function(){if(video&&video.duration)video.currentTime=(Number(seek.value)/1000)*video.duration;showControls();});
+    if(muteToggle)muteToggle.addEventListener('click',function(e){e.stopPropagation();if(!video)return;video.muted=!video.muted;muteToggle.textContent=video.muted?'🔇':'🔊';muteToggle.setAttribute('aria-label',video.muted?'Unmute video':'Mute video');showControls();});
+    if(fullscreenToggle)fullscreenToggle.addEventListener('click',function(e){
+      e.stopPropagation();if(!shell)return;
+      if(document.fullscreenElement){if(document.exitFullscreen)document.exitFullscreen();}
+      else if(shell.requestFullscreen){shell.requestFullscreen();}
+      else if(video&&video.webkitEnterFullscreen){video.webkitEnterFullscreen();}
+      showControls();
+    });
+    if(shell){
+      shell.addEventListener('pointermove',showControls);
+      shell.addEventListener('pointerdown',showControls);
+      shell.addEventListener('touchstart',showControls,{passive:true});
+      shell.addEventListener('mouseleave',function(){if(video&&!video.paused){if(hideTimer)clearTimeout(hideTimer);hideTimer=setTimeout(function(){shell.classList.add('controls-hidden');},800);}});
+    }
+    // Request muted autoplay when the video scrolls into view. Browsers may still block it.
+    if(video&&'IntersectionObserver' in window){
+      var attempted=false;
+      var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){
+        if(entry.isIntersecting&&entry.intersectionRatio>=0.35&&!attempted){attempted=true;video.muted=true;var p=video.play();if(p&&p.catch)p.catch(function(){showControls();});observer.disconnect();}
+      });},{threshold:[0.35]});
+      observer.observe(shell||video);
+    }
     button.addEventListener('click',function(){
-      content.style.display='block';
-      content.classList.add('show');
+      content.style.display='block';content.classList.add('show');
       setTimeout(function(){content.scrollIntoView({behavior:'smooth',block:'start'});},50);
     });
   }
