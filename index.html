@@ -13,7 +13,17 @@
 .frame{position:absolute;inset:9px;border:1px solid #e8c57585;pointer-events:none;z-index:2}
 .petals{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:3}
 .petal{position:absolute;top:-20px;width:9px;height:14px;background:linear-gradient(135deg,#ffe6a6,#9d1632);border-radius:90% 0 90% 0;animation:fall linear infinite}
-.petal:nth-child(1){left:9%;animation-duration:12s;animation-delay:-4s}.petal:nth-child(2){left:27%;animation-duration:16s;animation-delay:-9s}.petal:nth-child(3){left:66%;animation-duration:14s;animation-delay:-6s}.petal:nth-child(4){left:86%;animation-duration:18s;animation-delay:-12s}
+.petal:nth-child(1){left:5%;animation-duration:12s;animation-delay:-2s}
+.petal:nth-child(2){left:15%;animation-duration:17s;animation-delay:-8s}
+.petal:nth-child(3){left:25%;animation-duration:13s;animation-delay:-5s}
+.petal:nth-child(4){left:35%;animation-duration:19s;animation-delay:-11s}
+.petal:nth-child(5){left:45%;animation-duration:14s;animation-delay:-3s}
+.petal:nth-child(6){left:55%;animation-duration:16s;animation-delay:-9s}
+.petal:nth-child(7){left:65%;animation-duration:11s;animation-delay:-6s}
+.petal:nth-child(8){left:75%;animation-duration:18s;animation-delay:-12s}
+.petal:nth-child(9){left:85%;animation-duration:15s;animation-delay:-4s}
+.petal:nth-child(10){left:95%;animation-duration:20s;animation-delay:-10s}
+.petal:nth-child(n+11){left:calc(5% + (var(--i, 1) * 4%));animation-duration:14s;animation-delay:-7s}
 @keyframes fall{to{transform:translate(28px,110svh) rotate(420deg);opacity:.1}}
 .open-hit{position:absolute;z-index:5;left:50%;top:76.8%;transform:translate(-50%,-50%);width:min(72%,560px);height:clamp(58px,11vw,104px);border:0;background:transparent;border-radius:999px;cursor:pointer;display:grid;place-items:center;color:transparent}
 .open-hit:focus-visible{outline:2px solid #fff0c5;outline-offset:8px}
@@ -67,12 +77,43 @@ footer{text-align:center;font:10px Arial,sans-serif;letter-spacing:.2em;color:#b
 
 @media(max-height:650px){.hero{min-height:650px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important}}
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@500;600;700&display=swap');
+.couple-title{position:absolute;z-index:3;top:clamp(34px,8.5%,100px);left:50%;transform:translateX(-50%);width:min(92%,760px);text-align:center;pointer-events:none;color:#ffe8ae;text-shadow:0 3px 12px rgba(0,0,0,.88),0 0 24px rgba(255,191,80,.32)}
+.couple-title .names{font-family:'Great Vibes','Brush Script MT',cursive;font-size:clamp(43px,6.1vw,82px);line-height:1.05;font-weight:400;letter-spacing:.01em}
+.couple-title .weds{display:block;margin:3px 0 2px;font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(12px,1.55vw,19px);font-weight:600;letter-spacing:.42em;text-transform:uppercase;color:#fff0cc}
+.couple-title:after{content:'';display:block;width:clamp(90px,18vw,190px);height:1px;margin:12px auto 0;background:linear-gradient(90deg,transparent,#e8c575,transparent);box-shadow:0 0 8px rgba(232,197,117,.7)}
+@media(max-width:600px){.couple-title{top:7.5%}.couple-title .names{font-size:clamp(42px,11vw,64px)}.couple-title .weds{letter-spacing:.32em}}
 </style>
 </head>
 <body>
 <section class="hero" id="home" aria-label="Royal wedding invitation cover">
   <div class="frame"></div>
-  <div class="petals"><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span></div>
+<div class="petals">
+  <span class="petal"></span>
+  <span class="petal"></span>
+  <span class="petal"></span>
+  <span class="petal"></span>
+  <span class="petal"></span>
+  <span class="petal"></span>
+  <span class="petal"></span>
+  <span class="petal"></span>
+  <span class="petal"></span>
+  <span class="petal"></span>
+  <span class="petal"></span>
+  <span class="petal"></span>
+  <span class="petal"></span>
+  <span class="petal"></span>
+  <span class="petal"></span>
+  <span class="petal"></span>
+  <span class="petal"></span>
+  <span class="petal"></span>
+  <span class="petal"></span>
+  <span class="petal"></span>
+</div>
+  <div class="couple-title" aria-label="Deepak weds Shilpi">
+    <div class="names">Deepak <span style="font-family:'Cormorant Garamond',Georgia,serif;font-size:.62em;font-style:italic">&amp;</span> Shilpi</div>
+    <span class="weds">Weds</span>
+  </div>
   <button type="button" class="open-hit" id="open" aria-label="Open wedding invitation">Open Invitation</button>
   <div class="hint" aria-hidden="true">⌄ &nbsp; TAP TO OPEN &nbsp; ⌄</div>
 </section>
@@ -110,29 +151,25 @@ footer{text-align:center;font:10px Arial,sans-serif;letter-spacing:.2em;color:#b
           <h3>Lagan & Teeka</h3>
           <b>Precious Moments Banquet</b>
           <br>Najafgarh Rd, near Metro Pillar No. 571, Block B1, Janakpuri, New Delhi, 110058</b> 10:00am – 4:00 pm<br>
-          <a class="map-link" href="https://maps.app.goo.gl/AreuMFejJ9dZ5z7z6" target="_blank" rel="noopener noreferrer">View venue on Google Maps ↗</a>
+          <a class="map-link" href="https://maps.app.goo.gl/AreuMFejJ9dZ5z7z6" target="_blank" rel="noopener noreferrer">Event location</a>
         </div>
       </article>
       <article class="event"><div class="day">
         <strong>20</strong><span>Nov 2026</span></div>
         <div>
           <h3>The Wedding</h3>
-          <p>
-            <b>Ghud Chadhi</b> · 10:00–11:00 AM<br>
-            <b>Baraat arrival</b> · 08:00 PM<br>
-            <b>Wedding venue</b>
-            <br>Sumangalam Hotel & Banquet, Roaf SH 77, Joya, Amroha, Uttar Pradesh - 244245<br>
-            <a class="map-link" href="https://maps.app.goo.gl/nPgLcRGWAyBxcGWEA" target="_blank" rel="noopener noreferrer">View venue on Google Maps ↗</a>
+            <b>Sumangalam Hotel & Banquet</b>
+            <br>Roaf SH 77, Joya, Amroha, Uttar Pradesh - 244245</br> 8:00 pm<br>
+            <a class="map-link" href="https://maps.app.goo.gl/nPgLcRGWAyBxcGWEA" target="_blank" rel="noopener noreferrer">Event location</a>
           </div>
         </article>
     </div>
-    <p class="note">Please confirm the banquet name and full address before sharing publicly.</p>
   </section>
   <section class="closing">
     <div class="eyebrow">With best wishes</div><div class="rule"></div>
     <h2>We would be honoured by your presence</h2>
     <p>Your love, blessings, and good wishes will make this celebration unforgettable.</p>
-    <div class="signature">Deepak & Family</div>
+    <div class="signature">Kharpodiya Family</div>
   </section>
 </main>
 <footer>WITH LOVE · 20 NOVEMBER 2026</footer>
